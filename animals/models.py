@@ -14,7 +14,7 @@ category = (
 )
 
 class Note (models.Model):
-    user = models.ForeignKey(User, verbose_name='имя автора', on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', verbose_name='имя автора', on_delete=models.CASCADE)
     animal_category = models.CharField('категория животного', choices=category, max_length=50)
     title = models.CharField('заголовок', max_length=50)
     place_of_find = models.CharField ('место найденного животного',max_length=50)
