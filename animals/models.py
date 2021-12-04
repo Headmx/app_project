@@ -1,8 +1,10 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
+class NoteUser (AbstractUser):
+    pass
 
 class Note (models.Model):
     category = (
@@ -12,13 +14,13 @@ class Note (models.Model):
         ('AMPHIBIAN', 'amphibian'),
         ('OTHER', 'other'),
     )
-    user = models.ForeignKey('auth.User', verbose_name='name of author', on_delete=models.CASCADE)
+    user = models.ForeignKey(NoteUser, verbose_name='name of author', on_delete=models.CASCADE)
     animal_category = models.CharField('animal category', choices=category, max_length=50)
     title = models.CharField('title', max_length=50)
     place_of_find = models.CharField ('place of find',max_length=50)
     img = models.ImageField(upload_to='images',null=True, blank=True)
     info = models.TextField('Info of note', max_length=1000)
-    data = models.DateTimeField('date of publication')
+    data = models.DateTimeField('date of publication', default=timezone.now)
 
     def __str__(self):
         return f'заметка {self.id} => статья {self.title}'

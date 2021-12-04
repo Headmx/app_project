@@ -1,9 +1,6 @@
 {% extends 'animals/base.html' %}
 {% block content %}
 
-{% if i.img %}
-	<p><img class="img-article-left thumb" src="{{i.img.url}}"></p>
-{% endif %}
 
     <h1>{{ title }}</h1>
 <ul class="list-articles">
@@ -12,8 +9,10 @@
         <li>{{ i.animal_category }}</li>
         <li>{{ i.place_of_find }}</li>
         <li>{{ i.info| truncatewords:50 }}</li>
-        <li>{{ i.img }}</li>
         <li>{{ i.data }}</li>
+        {% if i.img %}
+            <img target="_blank" src="{{ i.img.url }}" />
+        {% endif %}
         <hr>
         <p class="read_more"><a href={{ i.get_absolut_way }}>Подробнее</a></p>
     {% endfor %}

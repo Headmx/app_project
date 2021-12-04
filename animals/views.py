@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect, HttpResponse
 from .models import *
 from .forms import AddPostNote
+from django.conf import settings
+
 
 menu = [{'title':'о проекте','url_name':'about'},
         {'title':'опубликовать новость', 'url_name': 'add_note'},
@@ -17,7 +19,7 @@ category = (
 )
 
 def home(request):
-    posts = Note.objects.all()
+    posts = Note.objects.order_by('-data')
     context = {
         'menu':menu,
         'posts':posts,
@@ -28,9 +30,23 @@ def home(request):
 def about(request):
     return render(request, 'animals/about.html', {'menu':menu, 'title': 'Главная страница'})
 
+
 def add_note(request):
+    imgs=Note.objects.all()
+    error =''
+    if request.method == 'POST':
+        form = AddPostNote(request.POST, request.FILES)
+        if form.is_valid():
+            add_note = form.save(commit=False)
+            add_note.user = request.user
+            add_note.save()
+            return redirect('home')
+        else:
+            error = 'error form'
+
     form = AddPostNote()
-    return render(request, 'animals/addpost.html',{'form':form, 'menu':menu, 'title':'Главная страница'})
+    data ={'form':form, 'menu':menu, 'title':'Добавить заметку','error':error,'img':imgs,'media_url':settings.MEDIA_URL}
+    return render(request, 'animals/addpost.html', data)
 
 def login(request):
     return HttpResponse ('Вход')
