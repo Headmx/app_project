@@ -1,28 +1,28 @@
 from rest_framework import serializers
-from animals.models import Note, Comments
+from animals.models import Announcement, Comment
 
-class NoteDetailSerializer(serializers.ModelSerializer):
+class AnnouncementDetailSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault()) #user определяется автоматически в create
     class Meta:
-        model = Note
+        model = Announcement
         fields = '__all__'
 
-class CommentsDetailSerializer(serializers.ModelSerializer):
+class CommentDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Comments
+        model = Comment
         fields = '__all__'
 
 
-class CommentsListSerializer(serializers.ModelSerializer):
+class CommentListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Comments
+        model = Comment
         fields = ['author','text']
 
-class NoteLitSerializer(serializers.ModelSerializer):
+class AnnouncementLitSerializer(serializers.ModelSerializer):
 
-    coments = CommentsListSerializer(read_only=True, many=True)
+    coments = CommentListSerializer(read_only=True, many=True)
     class Meta:
-        model = Note
+        model = Announcement
         fields = '__all__'
 
 

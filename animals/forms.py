@@ -1,12 +1,41 @@
-from django.forms import ModelForm
-from .models import Note, NoteUser
+from django.forms import ModelForm,inlineformset_factory,BaseInlineFormSet
+from .models import Announcement, NoteUser,Animal,Type,Details_type,Location
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 #__________note forms______________________
-class AddPostNote(ModelForm):
+class AddType(ModelForm):
     class Meta:
-        model = Note
-        fields = ['title','animal_category', 'info', 'place_of_find', 'img']
+        model = Type
+        fields = ('name', )
+
+class AddDetail(ModelForm):
+    class Meta:
+        model = Details_type
+        fields = ('names', )
+
+class AddAnimal(ModelForm):
+    class Meta:
+        model = Animal
+        fields = ('animal_name', 'animal_details', 'img')
+
+class AddLocation(ModelForm):
+    class Meta:
+        model = Location
+        fields = ('sity', 'region', 'district')
+
+class AddAnnouncement(ModelForm):
+    class Meta:
+        model = Announcement
+        fields = ('user', 'mail_contacts', 'phone_contacts')
+
+
+
+
+
+
+
+
+
 
 #___________user forms_______________________
 

@@ -1,7 +1,5 @@
-{% extends 'animals/base.html' %}
+{% extends 'animals/all_animals.html' %}
 {% block content %}
-
-
     <h1>{{ title }}</h1>
 <ul class="list-articles">
     {% for i in posts %}
@@ -16,6 +14,4 @@
         <hr>
         <p class="read_more"><a href={{ i.get_absolut_way }}>Подробнее</a></p>
     {% endfor %}
-</ul>
-
-{% endblock content %}
+{% endblock %}
