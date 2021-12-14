@@ -41,42 +41,19 @@
 
 <h1>{{ title }}</h1>
 <ul class="list-articles">
-    {% for a in type %}
-        <li>{{ a.name }}</li>
+    {% for a in announcement %}
+        <li>{{ a.clases }}</li>
+        <li>{{ a.breed }}</li>
+        <li>{{ a.animal_name }}</li>
+        <li>{{ a.animal_details }}</li>
+        <li>{{ a.city }}</li>
+        <li>{{ a.region }}</li>
+        <li>{{ a.district }}</li>
+        <li>{{ a.data }}</li>
+        <li>{{ a.mail_contacts }}</li>
+        <li>{{ a.phone_contacts }}</li>
+
         {% endfor %}
-
-        {% for b in detail %}
-        <li>{{ b.names }}</li>
-            {% endfor %}
-
-        {% for c in animal %}
-        <li>{{ c.animal_name }}</li>
-        <li>{{ c.animal_details| truncatewords:50 }}</li>
-        <p class="read_more"><a href={{ i.get_absolut_way }}>Подробнее</a></p>
-            {% if c.img %}
-        <img target="_blank" src="{{ c.img.url }}" />
-        {% endif %}
-            {% endfor %}
-
-
-        {% for d in location %}
-        <li>{{ d.sity }}</li>
-        <li>{{ d.district }}</li>
-        <li>{{ d.region }}</li>
-            {% endfor %}
-
-        {% for e in announcement %}
-        <li>{{ e.mail_contacts }}</li>
-        <li>{{ e.phone_contacts }}</li>
-        <li>{{ e.data }}</li>
-{% endfor %}
-
-
-
-
-
-
-
 
 
 

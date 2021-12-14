@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect, HttpResponse, get_object_or_404, Http404
 from .models import *
-from .forms import AddType, AddAnimal,AddAnnouncement,AddDetail, AddLocation
+from .forms import AnnouncementForm
 from django.conf import settings
+from django.views.generic import View
+
 
 menu = [{'title':'о проекте','url_name':'about'},
         {'title':'опубликовать новость', 'url_name': 'add_note'},
@@ -9,52 +11,35 @@ menu = [{'title':'о проекте','url_name':'about'},
           {'title':'регистрация', 'url_name':'reristration'}
         ]
 
-def add_note(request):
-    imgs = Animal.objects.all()
-    error = ''
-    if request.method == 'POST':
-        type_form = AddType(request.POST or None)
-        ditail_form = AddDetail(request.POST or None)
-        animal_form = AddAnimal(request.POST, request.FILES)
-        location_form = AddLocation(request.POST or None)
-        announcement_form = AddAnnouncement(request.POST or None)
+class AddNote(View):
+    def get(self,request):
+        form = AnnouncementForm()
+        return render(request, 'animals/test.html', context={'form':form})
 
-        if type_form.is_valid() and ditail_form.is_valid() and animal_form.is_valid() and location_form.is_valid() and announcement_form.is_valid():
-            add_note = type_form.save(commit=False)
-            add_detail = ditail_form.save(commit=False)
-            add_animal = animal_form.save(commit=False)
-            add_location = location_form.save(commit=False)
-            add_announcement= announcement_form.save(commit=False)
-            add_note.save()
-            add_detail.save()
-            add_animal.save()
-            add_location.save()
-            add_announcement.save()
-            return redirect('all_animals')
-        else:
-            error = 'error form'
+    def post(self, request):
+        pos_form = AnnouncementForm()
+        error = ''
+        if request.method == 'POST':
+            pos_form = AnnouncementForm(request.POST, request.FILES)
+            if pos_form.is_valid():
+                pos_form.save()
+                if pos_form.cleaned_data.get('img'):   #эта штука должна отвечать за загрузку, но не работает
+                    image = Animal(img = request.FILES['img'])
+                    image.save()
+                    pos_form.image = image
+                return redirect('all_animals')
+            else:
+                error = 'error form'
 
-    type = AddType()
-    detail = AddDetail()
-    animal = AddAnimal()
-    location = AddLocation()
-    announcement = AddAnnouncement()
-    data ={'type':type,'ditail':detail,'animal':animal,'location':location,'announcement':announcement,'error':error,'imgs':imgs,'menu':menu, 'title':'Добавить заметку','media_url':settings.MEDIA_URL}
-    return render(request, 'animals/addpost.html', data)
+        data = {'error': error,'pos_form': pos_form,'media_url': settings.MEDIA_URL}
+        return render(request, 'animals/all_animals.html', data)
+
 
 def all_animals(request):
-    type = Type.objects.all()
-    detail = Details_type.objects.all()
-    animal = Animal.objects.all()
-    location = Location.objects.all()
     announcement = Announcement.objects.all()
     context = {
-        'menu':menu,
-        'type':type,
-        'detail':detail,
-        'animal':animal,
-        'location':location,
         'announcement':announcement,
+        'menu':menu,
         'title': 'Пропавшие животные'
     }
     return render(request, 'animals/all_animals.html', context=context)
