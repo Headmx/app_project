@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Announcement,NoteUser, AnimalType,Breed,Animal,Location,Comment
-from .forms import NoteUserCreationForm, NoteUserChangeForm
+from .models import Announcement, AnimalType,Breed,Animal,Location,Comment
+#from .forms import NoteUserCreationForm, NoteUserChangeForm
 from django.contrib.auth.admin import UserAdmin
 
 #______________type note______________
@@ -35,11 +35,11 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 #_____________admin user____________________
 
-class CustomUserAdmin(UserAdmin):
-    add_form = NoteUserCreationForm
-    form = NoteUserChangeForm
-    model = NoteUser
-    list_display = ['email', 'username',]
+# class CustomUserAdmin(UserAdmin):
+#     add_form = NoteUserCreationForm
+#     form = NoteUserChangeForm
+#     model = 'users.CustomUser'
+#     list_display = ['email', 'username',]
 
 #_____________comment user____________________
 class CommentAdmin(admin.ModelAdmin):
@@ -48,7 +48,7 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ['id','user']
 
 
-admin.site.register(NoteUser, CustomUserAdmin)
+
 admin.site.register(AnimalType, AnimalTypeAdmin)
 admin.site.register(Breed, BreedAdmin)
 admin.site.register(Animal, AnimalAdmin)

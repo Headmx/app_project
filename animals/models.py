@@ -1,10 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
-
-class NoteUser(AbstractUser):
-    pass
 
 class AnimalType(models.Model):
     clases = models.CharField(max_length=50, verbose_name='Type of animal')
@@ -51,7 +47,7 @@ class Location(models.Model):
         return f'{self.id} - {self.city}'
 
 class Announcement(models.Model):
-    user = models.ForeignKey(NoteUser, verbose_name='name of author', on_delete=models.CASCADE,null=True, blank=True)
+    user = models.ForeignKey('users.CustomUser', verbose_name='name of author', on_delete=models.CASCADE,null=True, blank=True)
     animal = models.ForeignKey(Animal, verbose_name='animal information',on_delete=models.CASCADE,null=True, blank=True)
     location = models.ForeignKey(Location, verbose_name='find place',on_delete=models.CASCADE,null=True, blank=True)
     data = models.DateTimeField('date of publication', default=timezone.now)
@@ -64,7 +60,7 @@ class Announcement(models.Model):
         return f'{self.user} - {self.mail_contacts} or {self.phone_contacts}'
 
 class Comment(models.Model):
-    user = models.ForeignKey(NoteUser, verbose_name='name of author', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.CustomUser', verbose_name='name of author', on_delete=models.CASCADE)
     comment_text = models.CharField(max_length=200, verbose_name= 'info of comment')
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name='coments')
 

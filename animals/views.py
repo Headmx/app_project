@@ -5,10 +5,11 @@ from django.conf import settings
 from django.views.generic import View
 
 
-menu = [{'title':'о проекте','url_name':'about'},
-        {'title':'опубликовать новость', 'url_name': 'add_note'},
-         {'title':'войти', 'url_name': 'login'},
-          {'title':'регистрация', 'url_name':'reristration'}
+menu = [{'title':'Главная','url_name':'home'},
+        {'title':'О проекте','url_name':'about'},
+        {'title':'Опубликовать новость', 'url_name': 'add_note'},
+         {'title':'Войти', 'url_name': 'signup'},
+          {'title':'Регистрация', 'url_name':'login'}
         ]
 
 class AddNote(View):
@@ -46,15 +47,15 @@ def all_animals(request):
 
 
 def about(request):
-    return render(request, 'animals/about.html', {'menu':menu, 'title': 'Главная страница'})
+    return render(request, 'animals/about.html', {'menu':menu, 'title': 'О проекте'})
 def home(request):
-    return render(request, 'animals/about.html', {'menu':menu, 'title': 'Главная страница'})
+    return render(request, 'animals/home.html', {'menu':menu, 'title': 'Главная страница'})
 
 
-def login(request):
-    return HttpResponse ('Вход')
-def reristration(request):
-    return HttpResponse ('Регистрация')
+#def login(request):
+#    return HttpResponse ('Вход')
+#def reristration(request):
+#    return HttpResponse ('Регистрация')
 
 def show_post(request, post_id):
     post = get_object_or_404(Announcement, slug=post_id)

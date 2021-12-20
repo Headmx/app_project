@@ -53,14 +53,14 @@ class AnnouncementForm(forms.Form):
 
 #___________user forms_______________________
 
-class NoteUserCreationForm(UserCreationForm):
+# class NoteUserCreationForm(UserCreationForm):
 
-    class Meta(UserCreationForm):
-        model = NoteUser
-        fields = ('username', 'email')
+#     class Meta(UserCreationForm):
+#         model = 'users.CustomUser'
+#         fields = ('username', 'email')
 
-class NoteUserChangeForm(UserChangeForm):
+# class NoteUserChangeForm(UserChangeForm):
 
-    class Meta:
-        model = NoteUser
-        fields = ('username', 'email')
+#     class Meta:
+#         model = 'users.CustomUser'
+#         fields = ('username', 'email')
