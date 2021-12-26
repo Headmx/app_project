@@ -5,11 +5,11 @@ from django.conf import settings
 from django.views.generic import View
 
 
-menu = [{'title':'Главная','url_name':'home'},
-        {'title':'О проекте','url_name':'about'},
-        {'title':'Опубликовать новость', 'url_name': 'add_note'},
-         {'title':'Войти', 'url_name': 'signup'},
-          {'title':'Регистрация', 'url_name':'login'}
+menu = [{'title': 'Главная', 'url_name': 'home'},
+        {'title': 'О проекте', 'url_name': 'about'},
+        {'title': 'Опубликовать новость', 'url_name': 'add_note'},
+        {'title': 'Войти', 'url_name': 'signup'},
+        {'title': 'Регистрация', 'url_name': 'login'}
         ]
 
 class AddNote(View):
@@ -25,22 +25,22 @@ class AddNote(View):
             if pos_form.is_valid():
                 pos_form.save()
                 if pos_form.cleaned_data.get('img'):   #эта штука должна отвечать за загрузку, но не работает
-                    image = Animal(img = request.FILES['img'])
+                    image = Animal(img=request.FILES['img'])
                     image.save()
                     pos_form.image = image
                 return redirect('all_animals')
             else:
                 error = 'error form'
 
-        data = {'error': error,'pos_form': pos_form,'media_url': settings.MEDIA_URL}
+        data = {'error': error, 'pos_form': pos_form, 'media_url': settings.MEDIA_URL}
         return render(request, 'animals/all_animals.html', data)
 
 
 def all_animals(request):
     announcement = Announcement.objects.all()
     context = {
-        'announcement':announcement,
-        'menu':menu,
+        'announcement': announcement,
+        'menu': menu,
         'title': 'Пропавшие животные'
     }
     return render(request, 'animals/all_animals.html', context=context)

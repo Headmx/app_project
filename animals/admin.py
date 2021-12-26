@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Announcement, AnimalType,Breed,Animal,Location,Comment
+from .models import Announcement, AnimalType, Breed, Animal, Location, Comment
 #from .forms import NoteUserCreationForm, NoteUserChangeForm
 from django.contrib.auth.admin import UserAdmin
 

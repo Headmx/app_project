@@ -47,7 +47,7 @@ class AnnouncementForm(forms.Form):
             phone_contacts=self.cleaned_data['phone_contacts']
         )
 
-        all = new_clases, new_breed, new_animal,new_location, new_Announcement
+        all = new_clases, new_breed, new_animal, new_location, new_Announcement
         return all
 
 
