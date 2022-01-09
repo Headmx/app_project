@@ -11,14 +11,14 @@ urlpatterns = (
     path('all/', ListAnnouncementView.as_view()),
     path('all/<int:pk>/', AnnouncementDetailView.as_view()),
 
-    path('', views.home, name= 'home'),
-    path('about/', views.about, name= 'about'),
-    path('add_note/', AddNote.as_view(), name= 'add_note'),
+    path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
+    path('add_note/', AddNote.as_view(), name='add_note'),
     #path('login/', views.login, name= 'login'),
     #path('reristration/', views.reristration, name= 'reristration'),
-    path('post/<slug:post_slug>/', views.show_post, name= 'post'), #раскрывает поле "подробнее на глвной странице"
-    path('category/<int:cat_id>/', views.show_category, name= 'kategory'),
+    path('post/<slug:post_slug>/', views.show_post, name='post'), #раскрывает поле "подробнее на глвной странице"
+    path('category/<int:cat_id>/', views.show_category, name='kategory'),
 
-    path('all_animals', views.all_animals, name = 'all_animals'),
+    path('all_animals', views.all_animals, name='all_animals'),
 
 )

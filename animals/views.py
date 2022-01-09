@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, HttpResponse, get_object_or_404, Http404
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404, Http404
 from .models import *
 from .forms import AnnouncementForm
 from django.conf import settings
@@ -7,15 +7,15 @@ from django.views.generic import View
 
 menu = [{'title': 'Главная', 'url_name': 'home'},
         {'title': 'О проекте', 'url_name': 'about'},
-        {'title': 'Опубликовать новость', 'url_name': 'add_note'},
-        {'title': 'Войти', 'url_name': 'signup'},
-        {'title': 'Регистрация', 'url_name': 'login'}
+        {'title': 'Опубликовать объявление', 'url_name': 'add_note'},
+        {'title': 'Войти', 'url_name': 'login'},
+        {'title': 'Регистрация', 'url_name': 'signup'}
         ]
 
 class AddNote(View):
-    def get(self,request):
+    def get(self, request):
         form = AnnouncementForm()
-        return render(request, 'animals/test.html', context={'form':form})
+        return render(request, 'animals/test.html', context={'form': form})
 
     def post(self, request):
         pos_form = AnnouncementForm()
@@ -47,9 +47,9 @@ def all_animals(request):
 
 
 def about(request):
-    return render(request, 'animals/about.html', {'menu':menu, 'title': 'О проекте'})
+    return render(request, 'animals/about.html', {'menu': menu, 'title': 'О проекте'})
 def home(request):
-    return render(request, 'animals/home.html', {'menu':menu, 'title': 'Главная страница'})
+    return render(request, 'animals/home.html', {'menu': menu, 'title': 'Главная страница'})
 
 
 #def login(request):
