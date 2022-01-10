@@ -1,0 +1,8 @@
+# help_to_animal
+## Run this commands to start project
+### create env
+> python3 -m venv env
+> source env/bin/activate
+### install docker
+> sudo apt update && sudo apt upgrade
+> sudo apt install linux-image-extra-$(uname -r) linux-image-extra-vir
