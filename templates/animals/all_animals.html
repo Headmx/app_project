@@ -42,16 +42,18 @@
 <h1>{{ title }}</h1>
 <ul class="list-articles">
     {% for a in announcement %}
-        <li>{{ a.clases }}</li>
-        <li>{{ a.breed }}</li>
-        <li>{{ a.animal_name }}</li>
-        <li>{{ a.animal_details }}</li>
-        <li>{{ a.city }}</li>
-        <li>{{ a.region }}</li>
-        <li>{{ a.district }}</li>
-        <li>{{ a.data }}</li>
-        <li>{{ a.mail_contacts }}</li>
-        <li>{{ a.phone_contacts }}</li>
+         <p><b>{{ a.animal.breed.animal_type.clases }}</b></p>
+         <p><b>{{ a.animal.breed.name }}</b></p>
+         <p><b>{{ a.animal.animal_name }}</b></p>
+         <p><b>{{ a.animal.animal_details }}</b></p>
+         {% if a.animal.img %}
+            <img target="_blank" src="{{ a.animal.img.url }}" />
+         {% endif %}
+         <p><b>{{ a.location.city }}</b></p>
+         <p><b>{{ a.location.region }}</b></p>
+         <p><b>{{ a.location.district }}</b></p>
+         <p><b>{{ a.data}}</b></p>
+         <p><b>{{ a.phone_contacts}}</b></p><br>
 
         {% endfor %}
 

@@ -19,20 +19,13 @@ class AddNote(View):
 
     def post(self, request):
         pos_form = AnnouncementForm()
-        error = ''
+        user = request.user
         if request.method == 'POST':
             pos_form = AnnouncementForm(request.POST, request.FILES)
             if pos_form.is_valid():
                 pos_form.save()
-                if pos_form.cleaned_data.get('img'):   #эта штука должна отвечать за загрузку, но не работает
-                    image = Animal(img=request.FILES['img'])
-                    image.save()
-                    pos_form.image = image
-                return redirect('all_animals')
-            else:
-                error = 'error form'
-
-        data = {'error': error, 'pos_form': pos_form, 'media_url': settings.MEDIA_URL}
+            return redirect('all_animals')
+        data = {'pos_form': pos_form, 'media_url': settings.MEDIA_URL}
         return render(request, 'animals/all_animals.html', data)
 
 
