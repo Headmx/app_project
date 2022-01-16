@@ -1,11 +1,17 @@
 {% extends 'animals/all_animals.html' %}
 
 {% block content %}
-{{ post.info }}
+        <p><b>{{ post.animal.breed.animal_type.clases }}</b></p>
+         <p><b>{{ post.animal.breed.name }}</b></p>
+         <p><b>{{ post.animal.animal_name }}</b></p>
+        <p><b>{{ post.animal.animal_details }}</b></p>
+        {% if post.animal.img %}
+            <img target="_blank" src="{{ post.animal.img.url }}" />
+        {% endif %}
+        <p><b>{{ post.location.city }}</b></p>
+        <p><b>{{ post.location.region }}</b></p>
+        <p><b>{{ post.location.district }}</b></p>
+        <p><b>{{ post.data}}</b></p>
+        <p><b>{{ post.phone_contacts}}</b></p><br>
 
-{% if post.img %}
-<p><img class="img-article-left" src="{{post.img.url}}"></p>
-{% endif %}
-
-{{post.content|linebreaks}}
 {% endblock %}

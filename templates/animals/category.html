@@ -1,24 +1,69 @@
-{% extends 'animals/all_animals.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link link type="text/css" href="{% static 'animals/css/styles.css' %}" rel="stylesheet"/>
+</head>
+<body>
 
-{% block content %}
-<ul class="list-articles">
-	{% for p in posts %}
-			<li><div class="article-panel">
-	<p class="first">Категория: {{p.cat}}</p>
-	<p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
-</div>
-
-{% if p.photo %}
-	<p><img class="img-article-left thumb" src="{{p.img.url}}"></p>
-{% endif %}
-
-				<h2>{{p.title}}</h2>
-	{% autoescape on %}
-	{{p.content|linebreaks|truncatewords:50}}
-	{% endautoescape %}
+{% block mainmenu %}
+		<div class="header">
+			<ul id="mainmenu" class="mainmenu">
+{% for m in menu %}
+	{% if not forloop.last %}
+			<li><a href={% url m.url_name %}>{{m.title}}</a></li>
+	{% else %}
+			<li class="last"><a href={% url m.url_name %}>{{m.title}}</a></li>
+	{% endif %}
+{% endfor %}
+			</ul>
 			<div class="clear"></div>
-			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
-			</li>
-	{% endfor %}
-</ul>
-{% endblock %}
+		</div>
+{% endblock mainmenu %}
+
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+<tr>
+	<td valign="top" class="left-chapters">
+	<ul id="leftchapters">
+		<li><a href="../cat">Кошки</a></li>
+		<li><a href="../dog">Собаки</a></li>
+        <li><a href="../bird">Птицы</a></li>
+        <li><a href="../other">Иное</a></li><br>
+        <li><a href="../all_animals">Все животные</a></li>
+	</ul>
+</td>
+<td valign="top" class="content">
+	{% block breadcrumbs %}
+	{% endblock %}
+
+    <div class="annousment" style="margin: 0; padding: 0">
+    {% for a in announcement %}
+
+        <p><b>{{ a.animal.breed.animal_type.clases}}</b></p>
+         <p>{{ a.animal.breed.name }}</p>
+         <p>{{ a.animal.animal_name }}</p>
+        <p>{{ a.animal.animal_details }}</p>
+        {% if a.animal.img %}
+            <img target="_blank" src="{{ a.animal.img.url }}" />
+        {% endif %}
+        <p>{{ a.location.city }}</p>
+        <p>{{ a.location.region }}</p>
+        <p>{{ a.location.district }}</p>
+        <p>{{ a.data}}</p>
+        <p>{{ a.mail_contacts}}</p>
+        <p>{{ a.phone_contacts}}</p><br>
+        {% endfor %}
+
+   </div>
+
+	<div class="content-text">
+{% block content %}
+	</div>
+{% endblock content %}
+
+</td></tr></table>
+
+</body>
+</html>

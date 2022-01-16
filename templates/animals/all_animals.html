@@ -27,46 +27,41 @@
 <tr>
 	<td valign="top" class="left-chapters">
 	<ul id="leftchapters">
-		<li><a href="#">Кошки</a></li>
-		<li><a href="#">Собаки</a></li>
-        <li><a href="#">Птицы</a></li>
-        <li><a href="#">Земноволные</a></li>
-        <li><a href="#">Иное</a></li>
+		<li><a href="cat">Кошки</a></li>
+		<li><a href="dog">Собаки</a></li>
+        <li><a href="bird">Птицы</a></li>
+        <li><a href="other">Иное</a></li>
 	</ul>
 </td>
 <td valign="top" class="content">
 	{% block breadcrumbs %}
 	{% endblock %}
 
-
-<h1>{{ title }}</h1>
-<ul class="list-articles">
+    <div class="annousment">
     {% for a in announcement %}
-         <p><b>{{ a.animal.breed.animal_type.clases }}</b></p>
-         <p><b>{{ a.animal.breed.name }}</b></p>
-         <p><b>{{ a.animal.animal_name }}</b></p>
-         <p><b>{{ a.animal.animal_details }}</b></p>
-         {% if a.animal.img %}
-            <img target="_blank" src="{{ a.animal.img.url }}" />
-         {% endif %}
-         <p><b>{{ a.location.city }}</b></p>
-         <p><b>{{ a.location.region }}</b></p>
-         <p><b>{{ a.location.district }}</b></p>
-         <p><b>{{ a.data}}</b></p>
-         <p><b>{{ a.phone_contacts}}</b></p><br>
 
+        <p><b>{{ a.animal.breed.animal_type.clases}}</b></p>
+         <p>{{ a.animal.breed.name }}</p>
+         <p>{{ a.animal.animal_name }}</p>
+        <p>{{ a.animal.animal_details }}</p>
+        {% if a.animal.img %}
+            <img target="_blank" src="{{ a.animal.img.url }}" />
+        {% endif %}
+        <p>{{ a.location.city }}</p>
+        <p>{{ a.location.region }}</p>
+        <p>{{ a.location.district }}</p>
+        <p>{{ a.data}}</p>
+        <p>{{ a.phone_contacts}}</p>
+        <p>{{ a.mail_contacts}}</p><br>
         {% endfor %}
 
+</div>
 
-
-</ul>
-
-
-
-
-
-
-	<div class="content-text">
+{#<div class="clear"></div>#}
+{#			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Оставить комментарий</a></p>#}
+{##}
+{##}
+{#	<div class="content-text">#}
 {% block content %}
 	</div>
 {% endblock content %}

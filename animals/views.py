@@ -5,17 +5,16 @@ from django.conf import settings
 from django.views.generic import View
 
 
-menu = [{'title': 'Главная', 'url_name': 'home'},
-        {'title': 'О проекте', 'url_name': 'about'},
-        {'title': 'Опубликовать объявление', 'url_name': 'add_note'},
-        {'title': 'Войти', 'url_name': 'login'},
-        {'title': 'Регистрация', 'url_name': 'signup'}
+menu = [{'title':'о проекте','url_name':'about'},
+        {'title':'опубликовать новость', 'url_name': 'add_note'},
+         {'title':'войти', 'url_name': 'login'},
+          {'title':'регистрация', 'url_name':'reristration'}
         ]
 
 class AddNote(View):
-    def get(self, request):
+    def get(self,request):
         form = AnnouncementForm()
-        return render(request, 'animals/test.html', context={'form': form})
+        return render(request, 'templates/animals/addpost.html', context={'form':form,'menu':menu})
 
     def post(self, request):
         pos_form = AnnouncementForm()
@@ -24,55 +23,76 @@ class AddNote(View):
             pos_form = AnnouncementForm(request.POST, request.FILES)
             if pos_form.is_valid():
                 pos_form.save()
-            return redirect('all_animals')
-        data = {'pos_form': pos_form, 'media_url': settings.MEDIA_URL}
-        return render(request, 'animals/all_animals.html', data)
+                return redirect('all_animals')
+        data = {'pos_form': pos_form,'media_url': settings.MEDIA_URL}
+        return render(request, 'templates/animals/all_animals.html', data)
 
 
 def all_animals(request):
-    announcement = Announcement.objects.all()
+    announcement = Announcement.objects.all().order_by('-data')
     context = {
-        'announcement': announcement,
-        'menu': menu,
-        'title': 'Пропавшие животные'
+        'announcement':announcement,
+        'title': 'Пропавшие животные',
+        'menu': menu
     }
-    return render(request, 'animals/all_animals.html', context=context)
+    return render(request, 'templates/animals/all_animals.html', context=context)
+
+def show_cat(request):
+    announcement = Announcement.objects.filter(animal__breed__animal_type__clases='CAT')
+    if announcement.exists():
+        context = {
+            'announcement': announcement,
+            'title': 'Пропавшие животные',
+            'menu': menu
+        }
+        return render(request, 'templates/animals/category.html', context=context)
+    else:
+        return render(request, 'templates/animals/nonannouncement.html')
+
+
+def show_dog(request):
+    announcement = Announcement.objects.filter(animal__breed__animal_type__clases='DOG')
+    if announcement.exists():
+        context = {
+            'announcement': announcement,
+            'title': 'Пропавшие животные',
+            'menu': menu
+        }
+        return render(request, 'templates/animals/category.html', context=context)
+    else:
+        return render(request, 'templates/animals/nonannouncement.html')
+
+def show_bird(request):
+     announcement = Announcement.objects.filter(animal__breed__animal_type__clases='BIRD')
+     if announcement.exists():
+        context = {
+            'announcement': announcement,
+            'title': 'Пропавшие животные',
+            'menu': menu
+        }
+        return render(request, 'templates/animals/category.html', context=context)
+     else:
+         return render(request, 'templates/animals/nonannouncement.html')
+
+
+def show_other(request):
+    announcement = Announcement.objects.filter(animal__breed__animal_type__clases='OTHER')
+    if announcement.exists():
+        context = {
+            'announcement': announcement,
+            'title': 'Пропавшие животные',
+            'menu': menu
+        }
+        return render(request, 'templates/animals/category.html',context=context)
+    else:
+        return render(request, 'templates/animals/nonannouncement.html')
 
 
 def about(request):
-    return render(request, 'animals/about.html', {'menu': menu, 'title': 'О проекте'})
+    return render(request, 'templates/animals/about.html', {'menu':menu, 'title': 'Главная страница'})
 def home(request):
-    return render(request, 'animals/home.html', {'menu': menu, 'title': 'Главная страница'})
-
-
-#def login(request):
-#    return HttpResponse ('Вход')
-#def reristration(request):
-#    return HttpResponse ('Регистрация')
-
-def show_post(request, post_id):
-    post = get_object_or_404(Announcement, slug=post_id)
-
-    context = {
-        'post': post,
-        'menu': menu,
-        'title': post.title,
-        'cat_selected': post.cat_id,
-    }
-
-    return render(request, 'animals/post.html', context=context)
-
-def show_category(request, cat_id):
-    posts = Announcement.objects.filter(cat_id=cat_id)
-
-    if len(posts) == 0:
-        raise Http404()
-
-    context = {
-        'posts': posts,
-        'menu': menu,
-        'title': 'Отображение по рубрикам',
-        'cat_selected': cat_id,
-    }
-
-    return render(request, 'animals/index.html', context=context)
+    return render(request, 'templates/animals/about.html', {'menu':menu, 'title': 'Главная страница'})
+def partner(request):
+    return render(request, 'templates/animals/partner.html', {'menu':menu, 'title': 'Главная страница'})
+def help(request):
+    return render(request, 'templates/animals/help.html', {'menu':menu, 'title': 'Главная страница'})
