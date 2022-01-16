@@ -52,7 +52,7 @@ class Announcement(models.Model):
     location = models.ForeignKey(Location, verbose_name='find place',on_delete=models.CASCADE,null=True, blank=True)
     data = models.DateTimeField('date of publication', default=timezone.now)
     mail_contacts = models.EmailField(max_length=30, verbose_name='your email')
-    phone_contacts = models.IntegerField(verbose_name='enter your phone contact')
+    phone_contacts = models.BigIntegerField(verbose_name='enter your phone contact')
 
 
 

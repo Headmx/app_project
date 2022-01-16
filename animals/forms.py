@@ -24,7 +24,7 @@ class AnnouncementForm(forms.Form):
     district = forms.CharField(max_length=20)
     data = forms.DateField(initial=timezone.now)
     mail_contacts = forms.EmailField(help_text='A valid email address, please.')
-    phone_contacts = forms.IntegerField()
+    phone_contacts = forms.CharField(max_length=20)
 
 
     def save(self):
@@ -45,6 +45,7 @@ class AnnouncementForm(forms.Form):
             region=self.cleaned_data['region'],
             district=self.cleaned_data['district']
         )
+        print(self.cleaned_data)
         new_announcement = Announcement.objects.create(
             data=self.cleaned_data['data'],
             mail_contacts=self.cleaned_data['mail_contacts'],
